@@ -2,7 +2,11 @@
 
 
 string mensagemDeBoasVindas = "Boas vindas ao Screen Sound!!!";
-List<string> listaDasBandas = new List<string> {"U2", "Iron Maiden", "Avenged Sevenfold"};
+//List<string> listaDasBandas = new List<string> {"U2", "Iron Maiden", "Avenged Sevenfold"};
+
+Dictionary<string, List<int>> bandasRegistradas = new Dictionary<string, List<int>>();
+bandasRegistradas.Add("Linkin Park", new List<int>{ 7, 8,10});
+bandasRegistradas.Add("The Beatles", new List<int>());
 
 void ExibirLogo() 
 {
@@ -40,7 +44,7 @@ void     ExibirOpcoesDoMenu() {
             break;
         case 2:  MostrarBandasRegistradas(); 
             break;
-        case 3:  Console.WriteLine("Você escolheu a opção " + opcaoEscolhidaNumerica); 
+        case 3:  AvaliarUmaBanda(); 
             break;
         case 4:  Console.WriteLine("Você escolheu a opção " + opcaoEscolhidaNumerica); 
             break;
@@ -55,9 +59,10 @@ void     ExibirOpcoesDoMenu() {
 void RegistrarBanda() 
 {
     Console.Clear();
+    ExibirTituloDaOpcao("Registrar Bandas");
     Console.Write("Digite o nome da banda que deseja registrar: ");
     string nomeDaBanda = Console.ReadLine()!;
-    listaDasBandas.Add(nomeDaBanda);
+    bandasRegistradas.Add(nomeDaBanda, new List<int>());
     Console.WriteLine($"A banda {nomeDaBanda} foi registrada com sucesso!");
     Thread.Sleep(2000);
     Console.Clear();
@@ -68,9 +73,7 @@ void RegistrarBanda()
 void MostrarBandasRegistradas() 
 {
     Console.Clear();
-    Console.WriteLine("************************************");
-    Console.WriteLine("Exibindo todas as bandas registradas");
-    Console.WriteLine("************************************\n");
+    ExibirTituloDaOpcao("Exibindo todas as bandas registradas");
 
     /*
     for(int i = 0; i < listaDasBandas.Count; i++) 
@@ -79,7 +82,7 @@ void MostrarBandasRegistradas()
     }
     */
 
-    foreach (var banda in listaDasBandas) 
+    foreach (var banda in bandasRegistradas.Keys) 
     {
         Console.WriteLine($"Banda: {banda}");
     }
@@ -90,7 +93,64 @@ void MostrarBandasRegistradas()
     ExibirOpcoesDoMenu();
 }
 
-//ExibirOpcoesDoMenu();
+void AvaliarUmaBanda() 
+    { 
+        Console.Clear();
+        ExibirTituloDaOpcao("Avaliar banda");
+        Console.Write("Digite o nome da banda que deseja avaliar: \n");
+        string nomeDaBanda = Console.ReadLine()!;
+        
+    if(bandasRegistradas.ContainsKey(nomeDaBanda)) 
+        
+        {
+            Console.Write($"Qual a nota que a banda {nomeDaBanda} merece: ");
+            int nota = int.Parse(Console.ReadLine())!;
+            bandasRegistradas[nomeDaBanda].Add(nota);
+            Console.WriteLine($"A nota {nota} foi registrada com sucesso para a banda {nomeDaBanda}!");
+            Thread.Sleep(4000);
+            Console.Clear();
+            ExibirOpcoesDoMenu();
+
+        } else 
+        {
+            Console.WriteLine($"A banda {nomeDaBanda} não foi encontrada");
+            Console.WriteLine("Digite uma tecla para voltar ao menu principal");
+            Console.ReadKey();
+            ExibirOpcoesDoMenu();
+            Console.Clear();
+    }
+    }
+
+void ExibirTituloDaOpcao(string titulo) 
+{
+    int quantidadeDeLetras = titulo.Length;
+    string asteriscos = string.Empty.PadLeft(quantidadeDeLetras, '*');
+    Console.WriteLine(asteriscos);
+    Console.WriteLine(titulo);
+    Console.WriteLine(asteriscos + "\n");
+}
+
+ExibirOpcoesDoMenu();
+
+/*
+Dictionary<string, List<int>> vendasCarros = new Dictionary<string, List<int>> {
+    { "Bugatti Veyron", new List<int> { 10, 15, 12, 8, 5 } },
+    { "Koenigsegg Agera RS", new List<int> { 2, 3, 5, 6, 7 } },
+    { "Lamborghini Aventador", new List<int> { 20, 18, 22, 24, 16 } },
+    { "Pagani Huayra", new List<int> { 4, 5, 6, 5, 4 } },
+    { "Ferrari LaFerrari", new List<int> { 7, 6, 5, 8, 10 } }
+};
+
+double media = vendasCarros["Bugatti Veyron"].Average();
+Console.WriteLine($"A média de vendas é de {media}");
+*/
+    
+
+
+
+
+
+
 
 
 /*
@@ -109,14 +169,6 @@ for (int i = 0;i < inteiros.Count; i++)
         Console.WriteLine(inteiros[i]);
 }
 */
-
-
-
-
-
-
-
-
 
 
 /*
